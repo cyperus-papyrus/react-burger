@@ -1,24 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
+import AppHeader from "./components/app-header/app-header";
+import BurgerIngredients from "./components/burger-ingredients/burger-ingredients";
+import BurgerConstructor from "./components/burger-constructor/burger-constructor";
+import data from "./utils/data";
+import { Ingredient } from "./utils/types";
 
 function App() {
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      // В будущем здесь будет fetch к API
+      setIngredients(data);
+    } catch (err) {
+      setError("Ошибка загрузки ингредиентов");
+      console.error(err);
+    }
+  }, []);
+
+  if (ingredients.length === 0 && !error) {
+    return (
+      <div className="App">
+        <AppHeader />
+        <main className="main">
+          <div className="text text_type_main-large">Загрузка...</div>
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="App">
+        <AppHeader />
+        <main className="main">
+          <div className="text text_type_main-large" style={{ color: "red" }}>
+            {error}
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppHeader />
+      <main className="main">
+        <BurgerIngredients ingredients={ingredients} />
+        <BurgerConstructor ingredients={ingredients} />
+      </main>
     </div>
   );
 }

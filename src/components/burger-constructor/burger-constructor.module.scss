@@ -1,0 +1,94 @@
+.constructor {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.constructorContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: calc(100% - 140px);
+    flex: 1;
+}
+
+.bunContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.stuffsContainer {
+    overflow-y: auto;
+    min-height: 80px;
+    scroll-snap-type: y mandatory;
+    scroll-padding: 4px;
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--interface-input);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--text-secondary);
+        border-radius: 3px;
+
+        &:hover {
+            background: var(--text-secondary);
+        }
+
+        &:active {
+            background: var(--text-secondary);
+        }
+    }
+
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background: var(--interface-input);
+    }
+    scrollbar-color: var(--text-secondary) var(--interface-input);
+    scrollbar-width: thin;
+    &:hover {
+        scrollbar-color: var(--text-secondary) var(--interface-input);
+    }
+}
+
+.stuffsList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.staffItem {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    scroll-snap-align: start;
+}
+
+.orderSection {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 40px;
+}
+
+.totalPrice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dragIcon {
+    cursor: grab;
+    &:active {
+        cursor: grabbing;
+    }
+}
