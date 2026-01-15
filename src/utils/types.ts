@@ -15,7 +15,6 @@ export interface Ingredient {
     __v: number;
 }
 
-// Тип для ответа API (будет использовано, когда подключим)
 export interface ApiResponse<T> {
     success: boolean;
     data: T;
@@ -26,6 +25,7 @@ export type IngredientsArray = Ingredient[];
 
 export interface BurgerIngredientsProps {
     ingredients: Ingredient[];
+    onIngredientClick: (ingredient: Ingredient) => void;
 }
 
 export interface IngredientCardProps {
@@ -41,4 +41,5 @@ export interface IngredientsTabsProps {
 
 export interface BurgerConstructorProps {
     ingredients: Ingredient[];
+    onOrderClick: () => void;
 }

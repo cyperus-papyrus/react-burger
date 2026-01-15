@@ -2,10 +2,10 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import IngredientCard from "./ingredient-card/ingredient-card";
 import styles from "./burger-ingredients.module.scss";
-import { Ingredient, BurgerIngredientsProps } from "../../utils/types";
+import { BurgerIngredientsProps } from "../../utils/types";
 
 const BurgerIngredients = (props: BurgerIngredientsProps) => {
-  const { ingredients } = props;
+  const { ingredients, onIngredientClick } = props;
   const [currentTab, setCurrentTab] = useState<"bun" | "sauce" | "main">("bun");
 
   const bunRef = useRef<HTMLDivElement>(null);
@@ -29,10 +29,6 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
       mainRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
-
-  const handleIngredientClick = (ingredient: Ingredient) => {
-    console.log("Выбран ингредиент:", ingredient.name);
-  };
 
   useEffect(
     function () {
@@ -103,7 +99,8 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
               <IngredientCard
                 key={bun._id}
                 ingredient={bun}
-                onClick={handleIngredientClick}
+                onClick={onIngredientClick}
+                count={2}
               />
             ))}
           </div>
@@ -116,7 +113,7 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
               <IngredientCard
                 key={sauce._id}
                 ingredient={sauce}
-                onClick={handleIngredientClick}
+                onClick={onIngredientClick}
               />
             ))}
           </div>
@@ -129,7 +126,7 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
               <IngredientCard
                 key={main._id}
                 ingredient={main}
-                onClick={handleIngredientClick}
+                onClick={onIngredientClick}
               />
             ))}
           </div>

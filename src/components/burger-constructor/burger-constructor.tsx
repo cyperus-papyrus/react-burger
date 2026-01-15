@@ -9,7 +9,7 @@ import styles from "./burger-constructor.module.scss";
 import { BurgerConstructorProps } from "../../utils/types";
 
 function BurgerConstructor(props: BurgerConstructorProps) {
-  const ingredients = props.ingredients;
+  const { ingredients, onOrderClick } = props;
 
   const buns = ingredients.filter((item) => item.type === "bun");
   const stuffs = ingredients.filter((item) => item.type !== "bun").slice(0, 8);
@@ -50,7 +50,10 @@ function BurgerConstructor(props: BurgerConstructorProps) {
               ))}
             </ul>
           ) : (
-            <p className="text text_type_main-default text_color_inactive">
+            <p
+              className="text text_type_main-default text_color_inactive"
+              style={{ textAlign: "center" }}
+            >
               Начинки не добавлены
             </p>
           )}
@@ -73,7 +76,7 @@ function BurgerConstructor(props: BurgerConstructorProps) {
             <span className="text text_type_digits-medium">{totalPrice}</span>
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="large">
+          <Button htmlType="button" type="primary" size="large" onClick={onOrderClick}>
             Оформить заказ
           </Button>
         </div>

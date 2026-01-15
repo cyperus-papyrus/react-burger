@@ -14,7 +14,6 @@
 
 .bunContainer {
     display: flex;
-    justify-content: flex-end;
 }
 
 .stuffsContainer {
@@ -71,6 +70,7 @@
     align-items: center;
     justify-content: flex-end;
     scroll-snap-align: start;
+    max-width: 568px;
 }
 
 .orderSection {

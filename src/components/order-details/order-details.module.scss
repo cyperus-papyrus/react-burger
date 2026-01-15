@@ -1,0 +1,21 @@
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 51px 40px 120px 40px;
+}
+
+.orderNumber {
+    text-shadow:
+        0px 4px 32px rgba(51, 51, 255, 0.5),
+        0px 0px 8px rgba(51, 51, 255, 0.25),
+        0px 0px 16px rgba(51, 51, 255, 0.25);
+}
+
+.imageWrapper {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
