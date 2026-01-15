@@ -1,0 +1,52 @@
+.ingredients {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.ingredientsContainer {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding-bottom: 40px;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--interface-input);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--text-secondary);
+        border-radius: 3px;
+
+        &:hover {
+            background: var(--text-secondary);
+        }
+
+        &:active {
+            background: var(--text-secondary);
+        }
+    }
+
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background: var(--interface-input);
+    }
+    scrollbar-color: var(--text-secondary) var(--interface-input);
+    scrollbar-width: thin;
+    &:hover {
+        scrollbar-color: var(--text-secondary) var(--interface-input);
+    }
+}
+
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 32px;
+    justify-items: center;
+}
