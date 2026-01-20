@@ -1,13 +1,18 @@
 import styles from "./ingredient-details.module.scss";
-import { Ingredient } from "../../utils/types";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../services/store";
 
-interface IngredientDetailsProps {
-  ingredient: Ingredient;
-}
-
-function IngredientDetails(props: IngredientDetailsProps) {
-  const ingredient = props.ingredient;
-
+function IngredientDetails() {
+  const ingredient = useSelector((state: RootState) => state.ingredientDetails.item);
+  if (ingredient === null) {
+    return (
+      <div className={styles.details}>
+        <h3 className={`text text_type_main-medium mt-4 mb-8 ${styles.name}`}>
+          Выберите ингредиент
+        </h3>
+      </div>
+    );
+  }
   return (
     <div className={styles.details}>
       <img src={ingredient.image_large} alt={ingredient.name} className={styles.image} />
