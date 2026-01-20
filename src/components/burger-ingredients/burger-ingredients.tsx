@@ -2,7 +2,7 @@ import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import IngredientCard from "./ingredient-card/ingredient-card";
 import styles from "./burger-ingredients.module.scss";
-import type { RootState, AppDispatch } from "../../services/store";
+import type { AppDispatch } from "../../services/store";
 import { fetchIngredientsThunk } from "../../services/burgerIngredients";
 import { setDetails } from "../../services/ingredientDetails";
 import type { Ingredient } from "../../utils/types";
@@ -22,10 +22,10 @@ const BurgerIngredients = () => {
     items: ingredients,
     isLoading,
     error,
-  } = useAppSelector((state: RootState) => state.burgerIngredients);
+  } = useAppSelector((state) => state.burgerIngredients);
 
   const { bun, ingredients: constructorIngredients } = useAppSelector(
-    (state: RootState) => state.burgerConstructor,
+    (state) => state.burgerConstructor,
   );
 
   const buns = useMemo(

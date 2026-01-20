@@ -10,13 +10,9 @@ const initialState: BurgerIngredientsState = {
 
 export const fetchIngredientsThunk = createAsyncThunk(
   "burgerIngredients/fetchAll",
-  async (_, { rejectWithValue }) => {
-    try {
-      const data = await fetchIngredients();
-      return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
+  async () => {
+    const data = await fetchIngredients();
+    return data;
   },
 );
 

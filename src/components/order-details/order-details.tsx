@@ -1,12 +1,9 @@
 import styles from "./order-details.module.scss";
 import imageCheck from "../../images/graphics.svg";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../services/store";
+import { useAppSelector } from "../../services/store";
 
 function OrderDetails() {
-  const { order, isLoading, error } = useSelector(
-    (state: RootState) => state.orderDetails,
-  );
+  const { order, isLoading, error } = useAppSelector((state) => state.orderDetails);
 
   if (isLoading) {
     return (

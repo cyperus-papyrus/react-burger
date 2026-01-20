@@ -1,9 +1,8 @@
 import styles from "./ingredient-details.module.scss";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../services/store";
+import { useAppSelector } from "../../services/store";
 
 function IngredientDetails() {
-  const ingredient = useSelector((state: RootState) => state.ingredientDetails.item);
+  const ingredient = useAppSelector((state) => state.ingredientDetails.item);
   if (ingredient === null) {
     return (
       <div className={styles.details}>

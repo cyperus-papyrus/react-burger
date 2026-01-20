@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.scss";
 import { useMemo } from "react";
-import { RootState, useAppDispatch, useAppSelector } from "../../services/store";
+import { useAppDispatch, useAppSelector } from "../../services/store";
 import { useDrop } from "react-dnd";
 import { Ingredient } from "../../utils/types";
 import {
@@ -18,12 +18,8 @@ import DraggableConstructorElement from "./draggable-constructor-element/draggab
 
 function BurgerConstructor() {
   const dispatch = useAppDispatch();
-  const { bun, ingredients } = useAppSelector(
-    (state: RootState) => state.burgerConstructor,
-  );
-  const { isLoading: isOrderLoading } = useAppSelector(
-    (state: RootState) => state.orderDetails,
-  );
+  const { bun, ingredients } = useAppSelector((state) => state.burgerConstructor);
+  const { isLoading: isOrderLoading } = useAppSelector((state) => state.orderDetails);
 
   const totalPrice = useMemo(() => {
     const bunPrice = bun ? bun.price * 2 : 0;

@@ -13,13 +13,9 @@ const initialState: OrderDetailsState = {
 
 export const createOrderThunk = createAsyncThunk(
   "orderDetails/create",
-  async (ingredientIds: string[], { rejectWithValue }) => {
-    try {
-      const data = await createOrder(ingredientIds);
-      return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
+  async (ingredientIds: string[]) => {
+    const data = await createOrder(ingredientIds);
+    return data;
   },
 );
 
