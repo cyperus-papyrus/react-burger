@@ -15,18 +15,23 @@ export interface Ingredient {
     __v: number;
 }
 
-export interface ApiResponse<T> {
+export interface BaseApiResponse {
     success: boolean;
-    data: T;
     message?: string;
 }
 
-export type IngredientsArray = Ingredient[];
-
-export interface BurgerIngredientsProps {
-    ingredients: Ingredient[];
-    onIngredientClick: (ingredient: Ingredient) => void;
+export interface IngredientsResponse extends BaseApiResponse {
+    data: Ingredient[];
 }
+
+export interface OrderResponse extends BaseApiResponse {
+    name: string;
+    order: {
+        number: number;
+    };
+}
+
+export type IngredientsArray = Ingredient[];
 
 export interface IngredientCardProps {
     ingredient: Ingredient;
@@ -39,7 +44,30 @@ export interface IngredientsTabsProps {
     onTabClick: (value: string) => void;
 }
 
-export interface BurgerConstructorProps {
-    ingredients: Ingredient[];
-    onOrderClick: () => void;
+export interface ConstructorIngredient extends Ingredient {
+    uniqueId: string;
+}
+
+export interface BurgerConstructorState {
+    bun: Ingredient | null;
+    ingredients: ConstructorIngredient[];
+}
+
+export interface BurgerIngredientsState {
+    items: Ingredient[];
+    isLoading: boolean;
+    error: string | null;
+}
+
+export interface IngredientDetailsState {
+    item: Ingredient | null;
+}
+
+export interface OrderDetailsState {
+    order: {
+        number: number | null;
+        name: string | null;
+    };
+    isLoading: boolean;
+    error: string | null;
 }

@@ -1,22 +1,44 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import IngredientCard from "./ingredient-card/ingredient-card";
 import styles from "./burger-ingredients.module.scss";
-import { BurgerIngredientsProps } from "../../utils/types";
+import type { AppDispatch } from "../../services/store";
+import { setDetails } from "../../services/ingredientDetails";
+import type { Ingredient } from "../../utils/types";
+import { useAppDispatch, useAppSelector } from "../../services/store";
 
-const BurgerIngredients = (props: BurgerIngredientsProps) => {
-  const { ingredients, onIngredientClick } = props;
+const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState<"bun" | "sauce" | "main">("bun");
-
   const bunRef = useRef<HTMLDivElement>(null);
   const sauceRef = useRef<HTMLDivElement>(null);
   const mainRef = useRef<HTMLDivElement>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const currentTabRef = useRef(currentTab);
+  const dispatch: AppDispatch = useAppDispatch();
 
-  const buns = ingredients.filter((item) => item.type === "bun");
-  const sauces = ingredients.filter((item) => item.type === "sauce");
-  const mains = ingredients.filter((item) => item.type === "main");
+  const {
+    items: ingredients,
+    isLoading,
+    error,
+  } = useAppSelector((state) => state.burgerIngredients);
+
+  const { bun, ingredients: constructorIngredients } = useAppSelector(
+    (state) => state.burgerConstructor,
+  );
+
+  const buns = useMemo(
+    () => ingredients.filter((item) => item.type === "bun"),
+    [ingredients],
+  );
+  const sauces = useMemo(
+    () => ingredients.filter((item) => item.type === "sauce"),
+    [ingredients],
+  );
+  const mains = useMemo(
+    () => ingredients.filter((item) => item.type === "main"),
+    [ingredients],
+  );
 
   const handleTabClick = useCallback((value: string) => {
     setCurrentTab(value as "bun" | "sauce" | "main");
@@ -30,6 +52,28 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
     }
   }, []);
 
+  const handleIngredientClick = useCallback(
+    (ingredient: Ingredient) => {
+      dispatch(setDetails(ingredient));
+    },
+    [dispatch],
+  );
+
+  const getIngredientCount = useCallback(
+    (ingredient: Ingredient) => {
+      if (ingredient.type === "bun") {
+        return bun && bun._id === ingredient._id ? 2 : 0;
+      }
+
+      return constructorIngredients.filter((item) => item._id === ingredient._id).length;
+    },
+    [bun, constructorIngredients],
+  );
+
+  useEffect(() => {
+    currentTabRef.current = currentTab;
+  }, [currentTab]);
+
   useEffect(
     function () {
       const container = containerRef.current;
@@ -39,20 +83,23 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
 
       function handleScroll() {
         const sections = [
-          { ref: bunRef.current, tab: "bun" },
-          { ref: sauceRef.current, tab: "sauce" },
-          { ref: mainRef.current, tab: "main" },
+          { ref: bunRef.current, tab: "bun" as const },
+          { ref: sauceRef.current, tab: "sauce" as const },
+          { ref: mainRef.current, tab: "main" as const },
         ];
 
-        if (!container || sections.some((section) => !section.ref)) {
+        const validSections = sections.filter((section) => section.ref);
+
+        if (validSections.length === 0) {
           return;
         }
+        if (!container) return;
 
         const containerTop = container.getBoundingClientRect().top;
         let minDistance = Infinity;
         let closestTab = null;
 
-        sections.forEach(({ ref, tab }) => {
+        validSections.forEach(({ ref, tab }) => {
           if (!ref) return;
           const distance = Math.abs(ref.getBoundingClientRect().top - containerTop);
           if (distance < minDistance) {
@@ -61,30 +108,42 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
           }
         });
 
-        if (closestTab && closestTab !== currentTab) {
+        if (closestTab && closestTab !== currentTabRef.current) {
           setCurrentTab(closestTab);
         }
       }
+
       container.addEventListener("scroll", handleScroll);
+      handleScroll();
 
       return function () {
         container.removeEventListener("scroll", handleScroll);
       };
     },
-    [currentTab]
+    [ingredients.length],
   );
 
-  if (ingredients.length === 0) {
+  if (isLoading) {
     return (
       <section className={styles.ingredients}>
         <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
         <div className={styles.container}>
-          <p className="text text_type_main-default">Ингредиенты не загружены</p>
+          <p className="text text_type_main-default">Загрузка ингредиентов...</p>
         </div>
       </section>
     );
   }
 
+  if (error) {
+    return (
+      <section className={styles.ingredients}>
+        <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
+        <div className={styles.container}>
+          <p className="text text_type_main-default">Ошибка загрузки: {error}</p>
+        </div>
+      </section>
+    );
+  }
   return (
     <section className={styles.ingredients}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
@@ -99,8 +158,8 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
               <IngredientCard
                 key={bun._id}
                 ingredient={bun}
-                onClick={onIngredientClick}
-                count={2}
+                onClick={handleIngredientClick}
+                count={getIngredientCount(bun)}
               />
             ))}
           </div>
@@ -113,7 +172,8 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
               <IngredientCard
                 key={sauce._id}
                 ingredient={sauce}
-                onClick={onIngredientClick}
+                onClick={handleIngredientClick}
+                count={getIngredientCount(sauce)}
               />
             ))}
           </div>
@@ -126,7 +186,8 @@ const BurgerIngredients = (props: BurgerIngredientsProps) => {
               <IngredientCard
                 key={main._id}
                 ingredient={main}
-                onClick={onIngredientClick}
+                onClick={handleIngredientClick}
+                count={getIngredientCount(main)}
               />
             ))}
           </div>
