@@ -3,7 +3,6 @@ import IngredientsTabs from "./ingredients-tabs/ingredients-tabs";
 import IngredientCard from "./ingredient-card/ingredient-card";
 import styles from "./burger-ingredients.module.scss";
 import type { AppDispatch } from "../../services/store";
-import { fetchIngredientsThunk } from "../../services/burgerIngredients";
 import { setDetails } from "../../services/ingredientDetails";
 import type { Ingredient } from "../../utils/types";
 import { useAppDispatch, useAppSelector } from "../../services/store";
@@ -71,9 +70,6 @@ const BurgerIngredients = () => {
     [bun, constructorIngredients],
   );
 
-  useEffect(() => {
-    dispatch(fetchIngredientsThunk());
-  }, [dispatch]);
   useEffect(() => {
     currentTabRef.current = currentTab;
   }, [currentTab]);

@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect } from "react";
 import AppHeader from "./components/app-header/app-header";
 import BurgerIngredients from "./components/burger-ingredients/burger-ingredients";
 import BurgerConstructor from "./components/burger-constructor/burger-constructor";
@@ -9,6 +10,7 @@ import { resetDetails } from "./services/ingredientDetails";
 import { resetOrder } from "./services/orderDetails";
 import { resetConstructor } from "./services/burgerConstructor";
 import { useAppDispatch, useAppSelector } from "./services/store";
+import { fetchIngredientsThunk } from "./services/burgerIngredients";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -16,6 +18,9 @@ function App() {
   const order = useAppSelector((state) => state.orderDetails.order);
   const { isLoading: isOrderLoading } = useAppSelector((state) => state.orderDetails);
 
+  useEffect(() => {
+    dispatch(fetchIngredientsThunk());
+  }, [dispatch]);
   const closeIngredientModal = () => {
     dispatch(resetDetails());
   };
