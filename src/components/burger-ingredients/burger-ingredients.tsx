@@ -6,6 +6,7 @@ import type { AppDispatch } from "../../services/store";
 import { setDetails } from "../../services/ingredientDetails";
 import type { Ingredient } from "../../utils/types";
 import { useAppDispatch, useAppSelector } from "../../services/store";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const BurgerIngredients = () => {
   const [currentTab, setCurrentTab] = useState<"bun" | "sauce" | "main">("bun");
@@ -16,6 +17,8 @@ const BurgerIngredients = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentTabRef = useRef(currentTab);
   const dispatch: AppDispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     items: ingredients,
@@ -55,8 +58,11 @@ const BurgerIngredients = () => {
   const handleIngredientClick = useCallback(
     (ingredient: Ingredient) => {
       dispatch(setDetails(ingredient));
+      navigate(`/ingredients/${ingredient._id}`, {
+        state: { background: location },
+      });
     },
-    [dispatch],
+    [dispatch, navigate, location],
   );
 
   const getIngredientCount = useCallback(

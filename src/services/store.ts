@@ -3,6 +3,7 @@ import burgerIngredientsReducer from "./burgerIngredients";
 import burgerConstructorReducer from "./burgerConstructor";
 import ingredientDetailsReducer from "./ingredientDetails";
 import orderDetailsReducer from "./orderDetails";
+import authReducer from './auth';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
@@ -12,6 +13,7 @@ export const store = configureStore({
     burgerConstructor: burgerConstructorReducer,
     ingredientDetails: ingredientDetailsReducer,
     orderDetails: orderDetailsReducer,
+    auth: authReducer
   },
   devTools: process.env.NODE_ENV !== "production",
 });

@@ -71,3 +71,64 @@ export interface OrderDetailsState {
     isLoading: boolean;
     error: string | null;
 }
+
+export interface User {
+    email: string;
+    name: string;
+}
+
+export interface LoginRequest {
+    email: string;
+    password: string;
+}
+
+export interface RegisterRequest extends LoginRequest {
+    name: string;
+}
+
+export interface LogoutRequest {
+    token: string;
+}
+
+export interface ResetPasswordRequest {
+    email: string;
+}
+
+export interface ResetPasswordConfirmRequest {
+    password: string;
+    token: string;
+}
+
+export interface UpdateUserRequest {
+    email?: string;
+    name?: string;
+    password?: string;
+}
+
+export interface AuthResponse extends BaseApiResponse {
+    user: User;
+    accessToken: string;
+    refreshToken: string;
+}
+
+export interface UserResponse extends BaseApiResponse {
+    user: User;
+}
+
+export interface TokenResponse extends BaseApiResponse {
+    accessToken: string;
+    refreshToken: string;
+}
+
+export interface MessageResponse extends BaseApiResponse {
+    message: string;
+}
+
+export interface AuthState {
+    user: User | null;
+    accessToken: string | null;
+    refreshToken: string | null;
+    isLoading: boolean;
+    error: string | null;
+    isAuthenticated: boolean;
+}
