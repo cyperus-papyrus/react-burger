@@ -1,12 +1,12 @@
-import { useState, FormEvent, useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./forgot-password.module.scss";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 import { requestPasswordResetThunk, clearError } from "../../services/auth";
-
+import { useForm } from "../../hooks/useForms";
 function ForgotPasswordPage() {
-  const [email, setEmail] = useState("");
+  const { values, handleChange } = useForm({ email: "", password: "" });
 
   const dispatch = useAppDispatch();
   const { isLoading, error } = useAppSelector((state) => state.auth);
@@ -22,12 +22,12 @@ function ForgotPasswordPage() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    dispatch(requestPasswordResetThunk(email))
+    dispatch(requestPasswordResetThunk(values.email))
       .unwrap()
       .then(() => {
         localStorage.setItem("forgotPasswordVisited", "true");
         navigate("/reset-password", {
-          state: { email, from: location },
+          state: { email: values.email, from: location },
         });
       });
   };
@@ -43,8 +43,8 @@ function ForgotPasswordPage() {
           <Input
             type="email"
             placeholder="Укажите e-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={values.email}
+            onChange={handleChange}
             error={false}
             errorText="Ошибка"
             size="default"
@@ -60,7 +60,7 @@ function ForgotPasswordPage() {
             type="primary"
             size="medium"
             htmlType="submit"
-            disabled={!email}
+            disabled={!values.email}
             extraClass="mb-20"
           >
             {isLoading ? "Восстанавливаем..." : "Восстановить"}

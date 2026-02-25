@@ -1,4 +1,4 @@
-import { useState, FormEvent, useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Input,
@@ -8,10 +8,10 @@ import {
 import styles from "./login.module.scss";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 import { loginUserThunk, clearError } from "../../services/auth";
+import { useForm } from "../../hooks/useForms";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange } = useForm({ email: "", password: "" });
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -36,11 +36,11 @@ function LoginPage() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password) {
+    if (!values.email || !values.password) {
       return;
     }
 
-    dispatch(loginUserThunk({ email, password }));
+    dispatch(loginUserThunk({ email: values.email, password: values.password }));
   };
 
   return (
@@ -53,8 +53,8 @@ function LoginPage() {
             extraClass="mb-6"
             type="email"
             placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={values.email}
+            onChange={handleChange}
             error={false}
             errorText="Ошибка"
             size="default"
@@ -66,8 +66,8 @@ function LoginPage() {
           />
 
           <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={values.password}
+            onChange={handleChange}
             name="password"
             placeholder="Пароль"
             required
@@ -83,7 +83,7 @@ function LoginPage() {
             type="primary"
             size="medium"
             htmlType="submit"
-            disabled={isLoading || !email || !password}
+            disabled={isLoading || !values.email || !values.password}
             extraClass="mb-20"
           >
             {isLoading ? "Вход..." : "Войти"}

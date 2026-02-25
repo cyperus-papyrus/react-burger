@@ -1,4 +1,4 @@
-import { useState, FormEvent, useEffect } from "react";
+import { FormEvent, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Input,
@@ -8,11 +8,9 @@ import {
 import styles from "./register.module.scss";
 import { useAppDispatch, useAppSelector } from "../../services/store";
 import { registerUserThunk, clearError } from "../../services/auth";
-
+import { useForm } from "../../hooks/useForms";
 function RegisterPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleChange } = useForm({ name: "", email: "", password: "" });
   const dispatch = useAppDispatch();
   const { isLoading, error, isAuthenticated } = useAppSelector((state) => state.auth);
 
@@ -35,7 +33,13 @@ function RegisterPage() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(registerUserThunk({ email, password, name }));
+    dispatch(
+      registerUserThunk({
+        email: values.email,
+        password: values.password,
+        name: values.name,
+      }),
+    );
   };
 
   return (
@@ -47,8 +51,8 @@ function RegisterPage() {
           <Input
             type="text"
             placeholder="Имя"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={values.name}
+            onChange={handleChange}
             error={false}
             errorText="Ошибка"
             size="default"
@@ -61,8 +65,8 @@ function RegisterPage() {
           <Input
             type="email"
             placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={values.email}
+            onChange={handleChange}
             error={false}
             errorText="Ошибка"
             size="default"
@@ -73,8 +77,8 @@ function RegisterPage() {
           />
 
           <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={values.password}
+            onChange={handleChange}
             name="password"
             placeholder="Пароль"
             required
@@ -86,7 +90,7 @@ function RegisterPage() {
             type="primary"
             size="medium"
             htmlType="submit"
-            disabled={!name || !email || !password}
+            disabled={!values.name || !values.email || !values.password}
             extraClass="mb-20"
           >
             {isLoading ? "Регистрация..." : "Зарегистрироваться"}
