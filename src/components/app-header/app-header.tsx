@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./app-header.module.scss";
 import {
   BurgerIcon,
@@ -6,50 +5,62 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink } from "react-router-dom";
 
 const AppHeader = () => {
-  const [activeButton] = useState<"constructor" | "feed" | "profile">("constructor");
   return (
     <header className={`${styles.header} p-4`}>
       <nav className={styles.nav}>
         <div className={styles.leftSection}>
-          <a
-            href="/"
-            className={`${styles.link} pl-5 pr-5 pt-4 pb-4 ${
-              activeButton === "constructor" ? styles.linkActive : ""
-            }`}
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${styles.link} pl-5 pr-5 pt-4 pb-4 ${isActive ? styles.linkActive : ""}`
+            }
           >
-            <BurgerIcon type={activeButton === "constructor" ? "primary" : "secondary"} />
-            <span className="text text_type_main-default">Конструктор</span>
-          </a>
+            {({ isActive }) => (
+              <>
+                <BurgerIcon type={isActive ? "primary" : "secondary"} />
+                <span className="text text_type_main-default">Конструктор</span>{" "}
+              </>
+            )}
+          </NavLink>
 
-          <a
-            href="/"
-            className={`${styles.link} pl-5 pr-5 pt-4 pb-4 ${
-              activeButton === "feed" ? styles.linkActive : ""
-            }`}
+          <NavLink
+            to="/feed"
+            className={({ isActive }) =>
+              `${styles.link} pl-5 pr-5 pt-4 pb-4 ${isActive ? styles.linkActive : ""}`
+            }
           >
-            <ListIcon type={activeButton === "feed" ? "primary" : "secondary"} />
-            <span className="text text_type_main-default">Лента заказов</span>
-          </a>
+            {({ isActive }) => (
+              <>
+                <ListIcon type={isActive ? "primary" : "secondary"} />
+                <span className="text text_type_main-default">Лента заказов</span>
+              </>
+            )}
+          </NavLink>
         </div>
 
         <div className={styles.centerSection}>
-          <a href="/">
+          <NavLink to="/">
             <Logo />
-          </a>
+          </NavLink>
         </div>
 
         <div className={styles.rightSection}>
-          <a
-            href="/"
-            className={`${styles.link} pl-5 pr-5 pt-4 pb-4 ${
-              activeButton === "profile" ? styles.linkActive : ""
-            }`}
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              `${styles.link} pl-5 pr-5 pt-4 pb-4 ${isActive ? styles.linkActive : ""}`
+            }
           >
-            <ProfileIcon type={activeButton === "profile" ? "primary" : "secondary"} />
-            <span className="text text_type_main-default">Личный кабинет</span>
-          </a>
+            {({ isActive }) => (
+              <>
+                <ProfileIcon type={isActive ? "primary" : "secondary"} />
+                <span className="text text_type_main-default">Личный кабинет</span>
+              </>
+            )}
+          </NavLink>
         </div>
       </nav>
     </header>

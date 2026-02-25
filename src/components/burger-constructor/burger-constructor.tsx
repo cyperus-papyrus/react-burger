@@ -15,12 +15,15 @@ import {
 } from "../../services/burgerConstructor";
 import { createOrderThunk } from "../../services/orderDetails";
 import DraggableConstructorElement from "./draggable-constructor-element/draggable-constructor-element";
+import { useNavigate } from "react-router-dom";
 
 function BurgerConstructor() {
   const dispatch = useAppDispatch();
   const { bun, ingredients } = useAppSelector((state) => state.burgerConstructor);
   const { isLoading: isOrderLoading } = useAppSelector((state) => state.orderDetails);
 
+  const navigate = useNavigate();
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const totalPrice = useMemo(() => {
     const bunPrice = bun ? bun.price * 2 : 0;
     const ingredientsPrice = ingredients.reduce((sum, item) => sum + item.price, 0);
@@ -28,14 +31,20 @@ function BurgerConstructor() {
   }, [bun, ingredients]);
 
   const handleOrderClick = () => {
-    const ingredientIds = [
-      bun?._id,
-      bun?._id,
-      ...ingredients.map((item) => item._id),
-    ].filter(Boolean) as string[];
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    } else {
+      const ingredientIds = [
+        bun?._id,
+        bun?._id,
+        ...ingredients.map((item) => item._id),
+      ].filter(Boolean) as string[];
 
-    dispatch(createOrderThunk(ingredientIds));
+      dispatch(createOrderThunk(ingredientIds));
+    }
   };
+
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item: { ingredient: Ingredient }) {
