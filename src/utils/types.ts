@@ -1,18 +1,18 @@
 export type IngredientType = 'bun' | 'main' | 'sauce';
 
 export interface Ingredient {
-    _id: string;
-    name: string;
-    type: IngredientType;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    __v: number;
+    readonly _id: string;
+    readonly name: string;
+    readonly type: IngredientType;
+    readonly proteins: number;
+    readonly fat: number;
+    readonly carbohydrates: number;
+    readonly calories: number;
+    readonly price: number;
+    readonly image: string;
+    readonly image_mobile: string;
+    readonly image_large: string;
+    readonly __v: number;
 }
 
 export interface BaseApiResponse {
@@ -45,7 +45,7 @@ export interface IngredientsTabsProps {
 }
 
 export interface ConstructorIngredient extends Ingredient {
-    uniqueId: string;
+    readonly uniqueId: string;
 }
 
 export interface BurgerConstructorState {
@@ -53,28 +53,23 @@ export interface BurgerConstructorState {
     ingredients: ConstructorIngredient[];
 }
 
-export interface BurgerIngredientsState {
-    items: Ingredient[];
-    isLoading: boolean;
-    error: string | null;
-}
-
 export interface IngredientDetailsState {
     item: Ingredient | null;
 }
 
-export interface OrderDetailsState {
-    order: {
-        number: number | null;
-        name: string | null;
-    };
+export type AsyncState<T, DataField extends string = 'data'> = {
+    [K in DataField]: T;
+} & {
     isLoading: boolean;
     error: string | null;
-}
+};
+
+export interface BurgerIngredientsState extends AsyncState<Ingredient[], 'items'> { }
+export interface OrderDetailsState extends AsyncState<{ number: number | null; name: string | null }, 'order'> { }
 
 export interface User {
-    email: string;
-    name: string;
+    readonly email: string;
+    readonly name: string;
 }
 
 export interface LoginRequest {
