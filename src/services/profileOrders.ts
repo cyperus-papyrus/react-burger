@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Order } from '../utils/types';
 import { profileWsOpen, profileWsClose, profileWsError, profileWsMessage } from './actions/wsActions';
+import { FeedResponse } from '../utils/types';
 
 interface ProfileOrdersState {
     wsConnected: boolean;
@@ -31,8 +32,9 @@ const profileOrdersSlice = createSlice({
                 state.wsConnected = false;
                 state.error = action.payload;
             })
-            .addCase(profileWsMessage, (state, action) => {
+            .addCase(profileWsMessage, (state, action: PayloadAction<FeedResponse>) => {
                 const newOrders = action.payload.orders;
+
                 newOrders.forEach(newOrder => {
                     const existingIndex = state.orders.findIndex(o => o._id === newOrder._id);
                     if (existingIndex !== -1) {
@@ -41,7 +43,9 @@ const profileOrdersSlice = createSlice({
                         state.orders.push(newOrder);
                     }
                 });
-            })
+
+                state.error = null;
+            });
     },
 });
 
