@@ -13,6 +13,7 @@ import {
 } from './types';
 
 export const BASE_URL = 'https://norma.education-services.ru/api';
+export const WS_BASE_URL = 'wss://norma.education-services.ru';
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
     if (!response.ok) {
@@ -41,15 +42,19 @@ export const fetchIngredients = async (): Promise<Ingredient[]> => {
     }
 };
 
-export const createOrder = async (ingredientIds: string[]): Promise<OrderResponse> => {
+export const createOrder = async (ingredientIds: string[], accessToken: string | null): Promise<OrderResponse> => {
     try {
+        const headers: HeadersInit = {
+            'Content-Type': 'application/json'
+        };
+        if (accessToken) {
+            headers['Authorization'] = accessToken;
+        }
         const data = await request<OrderResponse>('/orders', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers,
             body: JSON.stringify({ ingredients: ingredientIds }),
-        })
+        });
         return data;
     } catch (error) {
         console.error('Ошибка создания заказа:', error);

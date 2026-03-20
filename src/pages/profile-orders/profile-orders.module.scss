@@ -17,19 +17,6 @@
 .content {
     display: flex;
     flex-direction: column;
-    max-width: 480px;
+    max-width: 860px;
     width: 100%;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 20px;
-    margin-top: 24px;
 }

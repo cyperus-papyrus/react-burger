@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { createOrder } from "../utils/api";
 import { OrderResponse, OrderDetailsState } from "../utils/types";
+import { AuthState } from "../utils/types";
 
 const initialState: OrderDetailsState = {
   order: {
@@ -13,8 +14,10 @@ const initialState: OrderDetailsState = {
 
 export const createOrderThunk = createAsyncThunk(
   "orderDetails/create",
-  async (ingredientIds: string[]) => {
-    const data = await createOrder(ingredientIds);
+  async (ingredientIds: string[], { getState }) => {
+    const state = getState() as { auth: AuthState };
+    const accessToken = state.auth.accessToken;
+    const data = await createOrder(ingredientIds, accessToken);
     return data;
   },
 );

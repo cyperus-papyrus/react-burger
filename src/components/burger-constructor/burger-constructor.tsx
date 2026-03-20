@@ -37,8 +37,8 @@ function BurgerConstructor() {
     } else {
       const ingredientIds = [
         bun?._id,
-        bun?._id,
         ...ingredients.map((item) => item._id),
+        bun?._id,
       ].filter(Boolean) as string[];
 
       dispatch(createOrderThunk(ingredientIds));

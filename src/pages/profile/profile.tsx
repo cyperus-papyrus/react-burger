@@ -1,5 +1,4 @@
 import { useState, FormEvent, useEffect, useCallback } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
 import {
   Input,
   Button,
@@ -7,12 +6,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./profile.module.scss";
 import { useAppDispatch, useAppSelector } from "../../services/store";
-import {
-  getUserDataThunk,
-  updateUserDataThunk,
-  logoutUserThunk,
-  clearError,
-} from "../../services/auth";
+import { getUserDataThunk, updateUserDataThunk, clearError } from "../../services/auth";
+import ProfileNav from "../../components/profile-nav/profile-nav";
 
 function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +18,6 @@ function ProfilePage() {
   const { user, isLoading, error, isAuthenticated } = useAppSelector(
     (state) => state.auth,
   );
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated && !user) {
@@ -72,45 +66,10 @@ function ProfilePage() {
     dispatch(clearError());
   }, [dispatch, user]);
 
-  const handleLogout = () => {
-    dispatch(logoutUserThunk())
-      .unwrap()
-      .then(() => {
-        navigate("/login", { replace: true });
-      });
-  };
-
   return (
     <section className={styles.page}>
       <div className={styles.container}>
-        <nav className={styles.nav}>
-          <NavLink
-            to="/profile"
-            end
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.navLinkActive : ""} text text_type_main-medium`
-            }
-          >
-            Профиль
-          </NavLink>
-          <NavLink
-            to="/profile/orders"
-            className={({ isActive }) =>
-              `${styles.navLink} ${isActive ? styles.navLinkActive : ""} text text_type_main-medium`
-            }
-          >
-            История заказов
-          </NavLink>
-          <button
-            className={`${styles.navLink} text text_type_main-medium`}
-            onClick={handleLogout}
-          >
-            Выход
-          </button>
-          <p className={`${styles.navText} text text_type_main-default`}>
-            В этом разделе вы можете изменить свои персональные данные
-          </p>
-        </nav>
+        <ProfileNav caption="В этом разделе вы можете изменить свои персональные данные" />
 
         <div className={styles.content}>
           <form className={styles.form} onSubmit={handleSubmit}>
