@@ -1,0 +1,28 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.navLink {
+    display: block;
+    padding: 16px 0;
+    text-decoration: none;
+    color: var(--text-inactive-color);
+    transition: color 0.3s ease;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+    text-align: left;
+    &:hover {
+        color: var(--text-primary-color);
+    }
+
+    &Active {
+        color: var(--text-primary-color);
+    }
+}
+
+.navText {
+    opacity: 0.4;
+    margin-top: 80px;
+}

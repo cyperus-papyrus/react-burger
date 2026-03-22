@@ -127,3 +127,29 @@ export interface AuthState {
     error: string | null;
     isAuthenticated: boolean;
 }
+
+export type OrderStatus = 'created' | 'pending' | 'done';
+
+export interface Order {
+    readonly _id: string;
+    readonly ingredients: string[];
+    readonly status: OrderStatus;
+    readonly name: string;
+    readonly number: number;
+    readonly createdAt: string;
+    readonly updatedAt: string;
+}
+
+export interface FeedResponse {
+    success: boolean;
+    orders: Order[];
+    total: number;
+    totalToday: number;
+}
+
+export interface FeedResponse {
+    success: boolean;
+    orders: Order[];
+    total: number;
+    totalToday: number;
+}

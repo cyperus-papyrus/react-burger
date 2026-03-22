@@ -1,0 +1,72 @@
+.container {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ingredientsList {
+    max-height: 312px;
+    overflow-y: auto;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.iconWrapper {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        right: 2px;
+        bottom: 2px;
+        background: var(--interface-bg);
+        border-radius: 100px;
+    }
+}
+
+.icon {
+    width: 112px;
+    height: 56px;
+    position: relative;
+    z-index: 1;
+    object-fit: cover;
+}
+
+.name {
+    flex: 1;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.totalPrice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

@@ -1,0 +1,18 @@
+.container {
+    max-width: 1292px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px 8px;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 580px;
+    gap: 60px;
+}
+
+.orders {
+    max-height: calc(100vh - 180px);
+    overflow-y: auto;
+    padding-right: 8px;
+}

@@ -4,6 +4,10 @@ import burgerConstructorReducer from "./burgerConstructor";
 import ingredientDetailsReducer from "./ingredientDetails";
 import orderDetailsReducer from "./orderDetails";
 import authReducer from './auth';
+import feedReducer from './feed';
+import profileOrdersReducer from './profileOrders';
+import { socketMiddleware } from './middleware/socketMiddleware';
+import { feedWsActions, profileWsActions } from './actions/wsActions';
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
@@ -13,8 +17,15 @@ export const store = configureStore({
     burgerConstructor: burgerConstructorReducer,
     ingredientDetails: ingredientDetailsReducer,
     orderDetails: orderDetailsReducer,
-    auth: authReducer
+    auth: authReducer,
+    feed: feedReducer,
+    profileOrders: profileOrdersReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(
+      socketMiddleware(feedWsActions),
+      socketMiddleware(profileWsActions)
+    ),
   devTools: process.env.NODE_ENV !== "production",
 });
 

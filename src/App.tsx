@@ -10,6 +10,10 @@ import {
   ProfilePage,
   IngredientDetailsPage,
   NotFoundPage,
+  FeedPage,
+  FeedOrderPage,
+  ProfileOrdersPage,
+  ProfileOrderPage,
 } from "./pages";
 import Modal from "./components/modal/modal";
 import IngredientDetails from "./components/ingredient-details/ingredient-details";
@@ -86,6 +90,17 @@ function App() {
           element={<ProtectedRouteElement element={<ProfilePage />} />}
         />
         <Route path="/ingredients/:id" element={<IngredientDetailsPage />} />
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:id" element={<FeedOrderPage />} />
+        <Route
+          path="/profile/orders"
+          element={<ProtectedRouteElement element={<ProfileOrdersPage />} />}
+        />
+        <Route
+          path="/profile/orders/:id"
+          element={<ProtectedRouteElement element={<ProfileOrderPage />} />}
+        />
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
@@ -97,6 +112,34 @@ function App() {
             element={
               <Modal title="Детали ингредиента" onClose={handleCloseModal}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
+
+      {/* Модалка заказа из ленты */}
+      {background && location.pathname.startsWith("/feed/") && (
+        <Routes>
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal title="Детали заказа" onClose={handleCloseModal}>
+                <FeedOrderPage />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
+
+      {/* Модалка заказа из истории */}
+      {background && location.pathname.startsWith("/profile/orders/") && (
+        <Routes>
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal title="Детали заказа" onClose={handleCloseModal}>
+                <ProfileOrderPage />
               </Modal>
             }
           />

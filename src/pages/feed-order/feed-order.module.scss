@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    width: 100%;
+    max-width: 1292px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.loading {
+    margin-top: 60px;
+    font-size: 24px;
+    text-align: center;
+}
