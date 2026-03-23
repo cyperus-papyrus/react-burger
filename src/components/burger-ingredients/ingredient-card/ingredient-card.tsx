@@ -28,6 +28,7 @@ function IngredientCard(props: IngredientCardProps) {
       onClick={handleClick}
       ref={dragRef as any}
       style={{ opacity: isDragging ? 0.5 : 1 }}
+      data-cy={`ingredient-${ingredient._id}`}
     >
       {count ? <Counter count={count} size="default" extraClass="m-1" /> : ""}
       <img src={ingredient.image} alt={ingredient.name} className={styles.image} />

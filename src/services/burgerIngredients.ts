@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { fetchIngredients } from "../utils/api";
 import { Ingredient, BurgerIngredientsState } from "../utils/types";
 
-const initialState: BurgerIngredientsState = {
+export const initialState: BurgerIngredientsState = {
   items: [],
   isLoading: false,
   error: null,

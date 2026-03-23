@@ -6,7 +6,7 @@ import {
   BurgerConstructorState,
 } from "../utils/types";
 
-const initialState: BurgerConstructorState = {
+export const initialState: BurgerConstructorState = {
   bun: null,
   ingredients: [],
 };

@@ -30,8 +30,11 @@ function OrderDetails() {
   }
 
   return (
-    <div className={styles.details}>
-      <h2 className={`text text_type_digits-large mb-8 ${styles.orderNumber}`}>
+    <div className={styles.details} data-cy="order-details">
+      <h2
+        className={`text text_type_digits-large mb-8 ${styles.orderNumber}`}
+        data-cy="order-number"
+      >
         {order.number}
       </h2>
       <p className="text text_type_main-medium mb-15">идентификатор заказа</p>

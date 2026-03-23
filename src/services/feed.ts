@@ -11,7 +11,7 @@ interface FeedState {
   error: string | null;
 }
 
-const initialState: FeedState = {
+export const initialState: FeedState = {
   wsConnected: false,
   orders: [],
   total: null,
