@@ -1,9 +1,9 @@
 import detailsReducer, { setDetails, resetDetails } from './ingredientDetails';
 import { Ingredient } from '../utils/types';
 import { UnknownAction } from 'redux';
+import { initialState } from './ingredientDetails';
 
 describe('ingredientDetails slice', () => {
-    const initialState = { item: null };
     const mockIngredient: Ingredient = {
         _id: '1',
         name: 'Тест',

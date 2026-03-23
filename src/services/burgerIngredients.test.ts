@@ -1,14 +1,9 @@
 import ingredientsReducer, { fetchIngredientsThunk } from './burgerIngredients';
 import { Ingredient } from '../utils/types';
 import { UnknownAction } from 'redux';
+import { initialState } from './burgerIngredients';
 
 describe('burgerIngredients slice', () => {
-    const initialState = {
-        items: [],
-        isLoading: false,
-        error: null,
-    };
-
     const mockIngredients: Ingredient[] = [
         {
             _id: '1',

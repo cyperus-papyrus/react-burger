@@ -2,16 +2,9 @@ import feedReducer from './feed';
 import { feedWsOpen, feedWsClose, feedWsError, feedWsMessage } from './actions/wsActions';
 import { Order } from '../utils/types';
 import { UnknownAction } from 'redux';
+import { initialState } from './feed';
 
 describe('feed slice', () => {
-    const initialState = {
-        wsConnected: false,
-        orders: [],
-        total: null,
-        totalToday: null,
-        error: null,
-    };
-
     const mockOrders: Order[] = [
         {
             _id: '1',

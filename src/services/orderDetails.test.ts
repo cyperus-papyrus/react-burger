@@ -1,13 +1,8 @@
 import orderReducer, { createOrderThunk, resetOrder } from './orderDetails';
 import { UnknownAction } from 'redux';
+import { initialState } from './orderDetails';
 
 describe('orderDetails slice', () => {
-    const initialState = {
-        order: { number: null, name: null },
-        isLoading: false,
-        error: null,
-    };
-
     it('должен возвращать начальное состояние', () => {
         expect(orderReducer(undefined, { type: 'unknown' } as UnknownAction)).toEqual(initialState);
     });

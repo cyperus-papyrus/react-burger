@@ -3,7 +3,7 @@ import { createOrder } from "../utils/api";
 import { OrderResponse, OrderDetailsState } from "../utils/types";
 import { AuthState } from "../utils/types";
 
-const initialState: OrderDetailsState = {
+export const initialState: OrderDetailsState = {
   order: {
     number: null,
     name: null,

@@ -9,7 +9,7 @@ interface ProfileOrdersState {
     error: string | null;
 }
 
-const initialState: ProfileOrdersState = {
+export const initialState: ProfileOrdersState = {
     wsConnected: false,
     orders: [],
     error: null,

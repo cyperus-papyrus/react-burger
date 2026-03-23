@@ -15,7 +15,7 @@ const REFRESH_TOKEN_COOKIE = 'refreshToken';
 const ACCESS_TOKEN_MAX_AGE = 20 * 60;
 const REFRESH_TOKEN_MAX_AGE = 7 * 24 * 60 * 60;
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
     user: null,
     accessToken: getCookie(ACCESS_TOKEN_COOKIE) || null,
     refreshToken: getCookie(REFRESH_TOKEN_COOKIE) || null,

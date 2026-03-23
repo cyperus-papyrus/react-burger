@@ -13,6 +13,7 @@ import authReducer, {
     setInitialAuth,
 } from './auth';
 import { UnknownAction } from 'redux';
+import { initialState } from './auth';
 
 jest.mock('../utils/cookie', () => ({
     getCookie: jest.fn().mockReturnValue(null),
@@ -24,15 +25,6 @@ jest.mock('../utils/cookie', () => ({
 const { getCookie, setCookie, deleteCookie } = require('../utils/cookie');
 
 describe('auth slice', () => {
-    const initialState = {
-        user: null,
-        accessToken: null,
-        refreshToken: null,
-        isLoading: false,
-        error: null,
-        isAuthenticated: false,
-    };
-
     const mockUser = { email: 'test@example.com', name: 'Test User' };
     const mockTokens = {
         accessToken: 'mockAccess',

@@ -2,14 +2,9 @@ import profileOrdersReducer from './profileOrders';
 import { profileWsOpen, profileWsClose, profileWsError, profileWsMessage } from './actions/wsActions';
 import { Order } from '../utils/types';
 import { UnknownAction } from 'redux';
+import { initialState } from './profileOrders';
 
 describe('profileOrders slice', () => {
-    const initialState = {
-        wsConnected: false,
-        orders: [],
-        error: null,
-    };
-
     const mockOrder1: Order = {
         _id: '1',
         ingredients: ['1'],

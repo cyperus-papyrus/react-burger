@@ -6,6 +6,7 @@ import constructorReducer, {
 } from './burgerConstructor';
 import { Ingredient } from '../utils/types';
 import { UnknownAction } from '@reduxjs/toolkit';
+import { initialState } from './burgerConstructor';
 
 describe('burgerConstructor slice', () => {
     const mockIngredient: Ingredient = {
@@ -36,11 +37,6 @@ describe('burgerConstructor slice', () => {
         image_mobile: '',
         image_large: '',
         __v: 0,
-    };
-
-    const initialState = {
-        bun: null,
-        ingredients: [],
     };
 
     it('должен возвращать начальное состояние', () => {
