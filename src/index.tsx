@@ -9,6 +9,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { store } from "./services/store";
 import { BrowserRouter } from "react-router-dom";
 
+declare global {
+  interface Window {
+    store: typeof store;
+  }
+}
+window.store = store;
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(

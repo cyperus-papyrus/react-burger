@@ -29,23 +29,23 @@ function Modal(props: ModalProps) {
         document.removeEventListener("keydown", handleEscapeKey);
       };
     },
-    [onClose]
+    [onClose],
   );
 
   return (
     <Portal>
-      <div className={styles.modal}>
+      <div className={styles.modal} data-cy="modal">
         <div className={styles.header}>
           {title && (
             <h2 className={`text text_type_main-large ${styles.title}`}>{title}</h2>
           )}
-          <button className={styles.closeButton} onClick={onClose}>
+          <button className={styles.closeButton} onClick={onClose} data-cy="modal-close">
             <CloseIcon type="primary" />
           </button>
         </div>
         <div className={styles.content}>{children}</div>
       </div>
-      <ModalOverlay onClick={onClose} />
+      <ModalOverlay onClick={onClose} data-cy="modal-overlay" />
     </Portal>
   );
 }

@@ -13,7 +13,7 @@ function IngredientDetails() {
     );
   }
   return (
-    <div className={styles.details}>
+    <div className={styles.details} data-cy="ingredient-details">
       <img src={ingredient.image_large} alt={ingredient.name} className={styles.image} />
       <h3 className={`text text_type_main-medium mt-4 mb-8 ${styles.name}`}>
         {ingredient.name}

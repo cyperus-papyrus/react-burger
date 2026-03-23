@@ -360,5 +360,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { clearError, restoreFromCookies } = authSlice.actions;
+export const { clearError, restoreFromCookies, setInitialAuth } = authSlice.actions;
 export default authSlice.reducer;

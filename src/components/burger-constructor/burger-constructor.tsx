@@ -85,10 +85,11 @@ function BurgerConstructor() {
     <section
       className={`${styles.constructor} ${isHover ? styles.constructorHover : ""}`}
       ref={dropTarget as any}
+      data-cy="constructor-area"
     >
       <div className={`${styles.constructorContainer} mt-25`}>
         {bun ? (
-          <div className={`${styles.bunContainer} pl-8 pr-4`}>
+          <div className={`${styles.bunContainer} pl-8 pr-4`} data-cy="constructor-bun">
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -103,7 +104,7 @@ function BurgerConstructor() {
 
         <div className={styles.stuffsContainer}>
           {ingredients.length > 0 ? (
-            <ul className={styles.stuffsList}>
+            <ul className={styles.stuffsList} data-cy="constructor-ingredients-list">
               {ingredients.map((item, index) => (
                 <DraggableConstructorElement
                   key={item.uniqueId}
@@ -124,7 +125,7 @@ function BurgerConstructor() {
         </div>
 
         {bun ? (
-          <div className={`${styles.bunContainer} pl-8 pr-4`}>
+          <div className={`${styles.bunContainer} pl-8 pr-4`} data-cy="constructor-bun">
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -138,7 +139,7 @@ function BurgerConstructor() {
         )}
 
         <div className={styles.orderSection}>
-          <div className={styles.totalPrice}>
+          <div className={styles.totalPrice} data-cy="total-price">
             <span className="text text_type_digits-medium">{totalPrice}</span>
             <CurrencyIcon type="primary" />
           </div>
@@ -148,6 +149,7 @@ function BurgerConstructor() {
             size="large"
             onClick={handleOrderClick}
             disabled={!canCreateOrder || isOrderLoading}
+            data-cy="order-button"
           >
             {isOrderLoading ? "Оформляем..." : "Оформить заказ"}
           </Button>
